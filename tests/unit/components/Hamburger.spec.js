@@ -11,8 +11,12 @@ describe('Hamburger.vue', () => {
   it('prop isActive', () => {
     const wrapper = shallowMount(Hamburger)
     wrapper.setProps({ isActive: true })
-    expect(wrapper.contains('.is-active')).toBe(true)
-    wrapper.setProps({ isActive: false })
-    expect(wrapper.contains('.is-active')).toBe(false)
+    wrapper.vm.$nextTick(() => {
+      expect(wrapper.contains('.is-active')).toBe(true)
+      wrapper.setProps({ isActive: false })
+      wrapper.vm.$nextTick(() => {
+        expect(wrapper.contains('.is-active')).toBe(false)
+      })
+    })
   })
 })

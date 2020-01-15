@@ -3,57 +3,60 @@ import store from './store'
 import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
-import { getToken } from '@/utils/auth' // get token from cookie
-import getPageTitle from '@/utils/get-page-title'
+import { getToken, getFrom } from '@/utils/auth' // get token from cookie
+import encode from 'urlencode'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const whiteList = ['/login'] // no redirect whitelist
-
 router.beforeEach(async(to, from, next) => {
-  // start progress bar
-  NProgress.start()
-
-  // set page title
-  document.title = getPageTitle(to.meta.title)
-
-  // determine whether the user has logged in
-  const hasToken = getToken()
-
-  if (hasToken) {
-    if (to.path === '/login') {
-      // if is logged in, redirect to the home page
-      next({ path: '/' })
-      NProgress.done()
-    } else {
-      const hasGetUserInfo = store.getters.name
-      if (hasGetUserInfo) {
-        next()
-      } else {
-        try {
-          // get user info
-          await store.dispatch('user/getInfo')
-
+  if (to.query && to.query.t) {
+    store.dispatch('user/Login', to.query).then(() => {
+      delete to.query.t
+      delete to.query.f
+      next({ path: to.path, replace: true, query: to.query })
+    })
+  } else {
+    NProgress.start()
+    if (getToken()) {
+      // 刷新页面初始化用户信息
+      if (!store.getters.userInfo && to.matched.length > 0) {
+        store.dispatch('user/GetInfo')
+      }
+      // 刷新页面时先挂载路由
+      if (store.getters['user/routers'].length === 0) {
+        store.dispatch('user/InitRouters').then(res => {
+          // 刷新页面时由于路由开始未挂载所有路由 导致会直接重定向到404，这里挂载完后replace到正确的path
+          if (to.path === '/404') {
+            next({
+              path: to.redirectedFrom,
+              replace: true
+            })
+          } else {
+            next(to.fullPath)
+          }
+        }).catch(error => {
           next()
-        } catch (error) {
-          // remove token and go to login page to re-login
-          await store.dispatch('user/resetToken')
-          Message.error(error || 'Has Error')
-          next(`/login?redirect=${to.path}`)
+          console.log(error)
+        })
+      } else {
+        if (!to.matched || to.matched.length === 0) {
+          Message({
+            center: true,
+            type: 'warning',
+            message: '权限不足'
+          })
           NProgress.done()
+        } else {
+          next()
         }
       }
-    }
-  } else {
-    /* has no token*/
-
-    if (whiteList.indexOf(to.path) !== -1) {
-      // in the free login whitelist, go directly
-      next()
     } else {
-      // other pages that do not have permission to access are redirected to the login page.
-      next(`/login?redirect=${to.path}`)
-      NProgress.done()
+      const from = getFrom();
+      if (from && from === 'zeus') {
+        window.location.href = process.env.VUE_APP_ZEUS_PATH + '?from=' + encode(window.location.href);
+      } else {
+        window.location.href = process.env.VUE_APP_ZEUS_EX_PATH + '?from=' + encode(window.location.href);
+      }
     }
   }
 })

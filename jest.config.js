@@ -20,5 +20,6 @@ module.exports = {
     'lcov',
     'text-summary'
   ],
+  verbose: true,
   testURL: 'http://localhost/'
 }

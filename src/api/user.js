@@ -1,24 +1,31 @@
 import request from '@/utils/request'
 
-export function login(data) {
+/**
+ * get user info
+ */
+export function getInfo() {
   return request({
-    url: '/vue-admin-template/user/login',
-    method: 'post',
-    data
+    url: '/systemuserinfo/remote',
+    method: 'get'
   })
 }
-
-export function getInfo(token) {
-  return request({
-    url: '/vue-admin-template/user/info',
-    method: 'get',
-    params: { token }
-  })
-}
-
+/**
+ * logout
+ */
 export function logout() {
   return request({
-    url: '/vue-admin-template/user/logout',
-    method: 'post'
+    url: '/systemlogout/remote',
+    method: 'get'
   })
 }
+
+/**
+ * get user menu
+ */
+export function getMenu() {
+  return request({
+    url: '/systemmenu/remote',
+    method: 'get'
+  })
+}
+
