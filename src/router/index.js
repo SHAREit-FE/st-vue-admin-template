@@ -57,12 +57,12 @@ export const constantRoutes = [
 ];
 export const asyncRouterMap = [
   {
-    path: '/',
+    path: '/template',
     component: Layout,
-    redirect: '/template',
+    redirect: '/template/index',
     children: [
       {
-        path: 'template',
+        path: 'index',
         name: 'Template',
         component: () => import('@/views/template/index'),
         meta: { title: 'template', icon: 'template' }

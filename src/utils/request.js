@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Message } from 'element-ui';
 import store from '@/store';
-import { getToken } from '@/utils/auth';
+import { getToken, getFrom } from '@/utils/auth';
 import encode from 'urlencode';
 
 // create an axios instance
@@ -44,7 +44,12 @@ service.interceptors.response.use(
     // 用于业务相关接口错误提示
     if (!res.success && res.returnCode && res.returnCode === '10004') {
       store.dispatch('user/FedLogOut').then(() => {
-        window.location.href = process.env.VUE_APP_ZEUS_PATH + '?from=' + encode(document.location.href);
+        const from = getFrom();
+        if (from && from === 'zeus') {
+          window.location.href = process.env.VUE_APP_ZEUS_PATH + '?from=' + encode(window.location.href);
+        } else {
+          window.location.href = process.env.VUE_APP_ZEUS_EX_PATH + '?from=' + encode(window.location.href);
+        }
       });
       return;
     }

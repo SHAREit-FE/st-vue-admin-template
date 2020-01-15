@@ -3,6 +3,8 @@ import { getToken, setToken, removeToken, setFrom } from '@/utils/auth';
 import { constantRoutes, asyncRouterMap } from '@/router';
 import router from '@/router';
 const session = sessionStorage;
+const router_key = 'SHAREit_ROUTER';
+
 const state = {
   token: getToken(),
   userInfo: '',
@@ -66,7 +68,7 @@ const actions = {
       logout(state.token).then((res) => {
         commit('SET_TOKEN', '');
         commit('SET_INFO', '');
-        session.removeItem('UGC_MANAGER_ROUTERS');
+        session.removeItem(router_key);
         removeToken();
         resolve();
       }).catch(error => {
@@ -79,7 +81,7 @@ const actions = {
     return new Promise(resolve => {
       commit('SET_TOKEN', '');
       commit('SET_INFO', '');
-      session.removeItem('UGC_MANAGER_ROUTERS');
+      session.removeItem(router_key);
       removeToken();
       resolve();
     });
@@ -88,7 +90,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       console.log(process.env.NODE_ENV);
       if (process.env.NODE_ENV === 'production') {
-        const json = JSON.parse(session.getItem('UGC_MANAGER_ROUTERS'));
+        const json = JSON.parse(session.getItem(router_key));
         if (json) {
           commit('SET_ROUTERS', filterRouter(json));
           resolve();
@@ -97,7 +99,7 @@ const actions = {
             if (res.success) {
               commit('SET_ROUTERS', filterRouter(res.data));
               if (res.data.length > 0) {
-                session.setItem('UGC_MANAGER_ROUTERS', JSON.stringify(res.data));
+                session.setItem(router_key, JSON.stringify(res.data));
               }
               resolve();
             }
