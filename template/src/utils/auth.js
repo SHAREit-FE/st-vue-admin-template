@@ -1,7 +1,17 @@
 import Cookies from 'js-cookie'
 
-const TokenKey = 'ANSWER-TOKEN'
-const FromKey = 'Answer-From';
+{{#zeusEx}}
+const FromKey = 'St-vue-From';
+export function getFrom() {
+  return Cookies.get(FromKey);
+}
+
+export function setFrom(from) {
+  return Cookies.set(FromKey, from);
+}
+{{/zeusEx}}
+
+const TokenKey = 'ST_VUE-TOKEN'
 
 export function getToken() {
   return Cookies.get(TokenKey)
@@ -20,10 +30,4 @@ export function removeToken() {
   return Cookies.remove(TokenKey)
 }
 
-export function getFrom() {
-  return Cookies.get(FromKey);
-}
 
-export function setFrom(from) {
-  return Cookies.set(FromKey, from);
-}

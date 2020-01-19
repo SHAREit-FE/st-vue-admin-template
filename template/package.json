@@ -1,8 +1,8 @@
 {
-  "name": "web-answer",
-  "version": "1.0.0",
-  "description": "web-answer",
-  "author": "zoeey",
+  "name": "{{name}}",
+  "version": "{{version}}",
+  "description": "{{description}}",
+  "author": "{{author}}",
   "license": "MIT",
   "scripts": {
     "dev": "vue-cli-service serve",

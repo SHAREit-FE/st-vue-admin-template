@@ -3,7 +3,11 @@ import store from './store'
 import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
+{{#zeusEx}}
 import { getToken, getFrom } from '@/utils/auth' // get token from cookie
+{{else}}
+import { getToken } from '@/utils/auth' // get token from cookie
+{{/zeusEx}}
 import encode from 'urlencode'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
@@ -51,12 +55,16 @@ router.beforeEach(async(to, from, next) => {
         }
       }
     } else {
+      {{#zeusEx}}
       const from = getFrom();
       if (from && from === 'zeus') {
         window.location.href = process.env.VUE_APP_ZEUS_PATH + '?from=' + encode(window.location.href);
       } else {
         window.location.href = process.env.VUE_APP_ZEUS_EX_PATH + '?from=' + encode(window.location.href);
       }
+      {{else}}
+      window.location.href = process.env.VUE_APP_ZEUS_PATH + '?from=' + encode(window.location.href);
+      {{/zeusEx}}
     }
   }
 })

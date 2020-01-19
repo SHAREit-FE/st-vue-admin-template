@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: 'SHAREit template',
+  title: '{{title}}',
 
   /**
    * @type {boolean} true | false
