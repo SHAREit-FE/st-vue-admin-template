@@ -1,8 +1,8 @@
 {
-  "name": {{name}},
+  "name": "{{name}}",
   "version": "1.0.0",
-  "description": {{description}},
-  "author": {{author}},
+  "description": "{{description}}",
+  "author": "{{author}}",
   "license": "MIT",
   "scripts": {
     "dev": "vue-cli-service serve",
