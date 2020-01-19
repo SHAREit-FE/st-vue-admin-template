@@ -5,6 +5,12 @@ module.exports = {
       required: true,
       message: 'Project name'
     },
+    version: {
+      type: 'string',
+      required: true,
+      message: 'Project version',
+      default: '1.0.0'
+    },
     description: {
       type: 'string',
       required: false,
