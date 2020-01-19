@@ -40,6 +40,10 @@ module.exports = {
     }
   },
   filters: {
+    'src/components/videoPlayer/**': 'useVideo'
   },
+  ignores: [
+    'src/components/Breadcrumb/**'
+  ],
   completeMessage: 'You can edit your code ASAP!\n\n Enjoy your life!~~'
 };
