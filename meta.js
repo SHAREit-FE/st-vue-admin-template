@@ -42,8 +42,8 @@ module.exports = {
   filters: {
     'src/components/videoPlayer/**': 'useVideo'
   },
-  ignores: [
-    'src/components/Breadcrumb/**'
+  skipInterpolation: [
+    'src/components/**'
   ],
   completeMessage: 'You can edit your code ASAP!\n\n Enjoy your life!~~'
 };
