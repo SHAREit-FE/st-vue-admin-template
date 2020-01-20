@@ -15,7 +15,7 @@ module.exports = {
       type: 'string',
       required: false,
       message: 'Project description',
-      default: 'A easyify H5 project'
+      default: 'A SHAREit vue admin project'
     },
     author: {
       type: 'string',
@@ -25,7 +25,7 @@ module.exports = {
     title: {
       type: 'string',
       message: 'home page title',
-      default: 'page title'
+      required: true
     },
     // 是否开通外网访问
     zeusEx: {
