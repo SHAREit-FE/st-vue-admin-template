@@ -44,7 +44,7 @@ module.exports = {
     'src/styles/video.scss': 'useVideo'
   },
   skipInterpolation: [
-    'src/components/**/*'
+    'src/components/Breadcrumb/*'
   ],
   completeMessage: 'You can edit your code ASAP!\n\n Enjoy your life!~~'
 };
