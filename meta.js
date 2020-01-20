@@ -40,10 +40,11 @@ module.exports = {
     }
   },
   filters: {
-    'src/components/videoPlayer/**': 'useVideo'
+    'src/components/videoPlayer/**': 'useVideo',
+    'src/styles/video.scss': 'useVideo'
   },
   skipInterpolation: [
-    'src/components/**'
+    'src/components/**/*'
   ],
   completeMessage: 'You can edit your code ASAP!\n\n Enjoy your life!~~'
 };
