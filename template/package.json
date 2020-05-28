@@ -24,6 +24,7 @@
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
     "path-to-regexp": "2.4.0",
+    "shareit-adminui": "git+ssh://git@gitlab.ushareit.me:web/workspace/shareit-adminui.git",
     "urlencode": "1.1.0",
     {{#useVideo}}
     "video.js": "^7.4.1",
